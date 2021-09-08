@@ -8,7 +8,6 @@ class PortfolioContainer extends Component {
         super(props)
 
         this.state = {
-            name: '',
             potfolio: [],
             search_results: [],
             active_currency: null,
@@ -16,6 +15,9 @@ class PortfolioContainer extends Component {
         }
 
         this.handleChange = this.handleChange.bind(this)
+        this.handleSelect = this.handleSelect.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleAmount = this.handleAmount.bind(this)
     }
 
     handleChange(e){
@@ -30,15 +32,64 @@ class PortfolioContainer extends Component {
         .catch( (data) => {
             debugger
         })
+    }
 
-        console.log(this.state.search_results)
+    handleSelect(e){
+        e.preventDefault()
+        const id = e.target.getAttribute('data-id')
+        const activeCurrency = this.state.search_results.filter( item => item.id == parseInt(id))
+        this.setState({
+            active_currency: activeCurrency[0],
+            search_results: []
+        })
+    }
+
+    handleSubmit(e){
+        e.preventDefault()
+
+        let currency = this.state.active_currency
+        let amount = this.state.amount
+
+        axios.post('http://localhost:3000/calculate', {
+            id: currency.id,
+            amount: amount
+        })
+        .then( (data) => {
+            console.log(data)
+            this.setState({
+                amount: '',
+                active_currency: null,
+                portfolio: [...this.state.potfolio, data.data]
+            })
+        })
+        .catch( (data) => {
+            debugger
+        })
+    }
+
+    handleAmount(e){
+        this.setState({
+            [e.target.name]: e.target.value
+        })
     }
 
     render(){
+        const searchOrCalculate = this.state.active_currency ? 
+        <Calculate
+            handleChange={this.handleAmount} 
+            handleSubmit={this.handleSubmit} 
+            active_currency={this.state.active_currency} 
+            amount={this.state.amount}
+        /> : 
+        <Search 
+            handleSelect={this.handleSelect} 
+            searchResults={this.state.search_results} 
+            handleChange={this.handleChange}
+        />
+
         return(
             <div>
-                <Search searchResults={this.state.search_results} handleChange={this.handleChange}/>
-                <Calculate/>
+                {searchOrCalculate}
             </div>
         )
     }
