@@ -24,18 +24,18 @@
    grid-template-columns: 2fr 3fr;
    grid-template-rows: 1fr;
    height: 100vh;
- }
+ } 
 
  .left {
    background:#f6f9fc;
    padding:10px;
  }
-
+ 
  .right {
    background: #001628;
  }
 
- .right h1{
+ .right h1{ 
    text-align:center;
  }
 
