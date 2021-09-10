@@ -8,7 +8,7 @@ class PortfolioItem extends Component {
     render(){
         return(
             <div>
-                <div className="row">
+                <div className="row"> 
                     <div className="col">
                         <div className="header">Currency:</div>
                         <div className="text">{this.props.item.currency.name}</div>
