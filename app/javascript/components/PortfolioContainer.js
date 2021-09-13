@@ -54,7 +54,7 @@ class PortfolioContainer extends Component {
         axios.post('http://localhost:3000/calculate', {
             id: currency.id,
             amount: amount
-        })
+        }) 
         .then( (data) => {
             console.log(data)
             this.setState({

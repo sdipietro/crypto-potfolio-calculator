@@ -4,7 +4,7 @@ import PortfolioItem from './PortfolioItem'
 class Portfolio extends Component {
     constructor(props) {
         super(props)
-    }
+    } 
 
     render(){
         const portfolioItems = this.props.portfolio.map( (item, index) => <PortfolioItem key={index} item={item}/>)
