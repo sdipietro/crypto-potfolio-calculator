@@ -9,8 +9,9 @@ class Currency < ApplicationRecord
         # url = 'https://api.coinmarketcap.com/v1/ticker/'
         # request = HTTParty.get(url + self.slug)
         # response = JSON.parse(request.body)
+        
         url = 'https://api.coinbase.com/v2/prices/' + self.currency_symbol + '/spot'
         request = HTTParty.get(url)
         response = request["data"]["amount"]
-    end 
+    end
 end
